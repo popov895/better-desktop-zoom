@@ -1,13 +1,15 @@
 'use strict';
 
-const { Adw, Gdk, GObject, Gtk } = imports.gi;
+import Adw from 'gi://Adw';
+import Gdk from 'gi://Gdk';
+import GObject from 'gi://GObject';
+import Gtk from 'gi://Gtk';
 
-const ExtensionUtils = imports.misc.extensionUtils;
-const Extension = ExtensionUtils.getCurrentExtension();
-const { Preferences } = Extension.imports.lib.preferences;
+import { ExtensionPreferences, gettext, pgettext  } from 'resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js';
+import { Preferences } from './lib/preferences.js';
 
 const _ = (text, context) => {
-    return context ? ExtensionUtils.pgettext(context, text) : ExtensionUtils.gettext(text);
+    return context ? pgettext(context, text) : gettext(text);
 };
 
 const ShortcutWindow = GObject.registerClass(
@@ -95,60 +97,58 @@ class ShortcutRow extends Adw.ActionRow {
     }
 });
 
-var init = () => {
-    ExtensionUtils.initTranslations(Extension.uuid);
-};
+export default class extends ExtensionPreferences {
+    fillPreferencesWindow(window) {
+        window._preferences = new Preferences(this);
+        window.connect(`close-request`, () => {
+            window._preferences.destroy();
+        });
 
-var fillPreferencesWindow = (window) => {
-    window._preferences = new Preferences();
-    window.connect(`close-request`, () => {
-        window._preferences.destroy();
-    });
+        const zoomFactorSpinBox = new Gtk.SpinButton({
+            adjustment: new Gtk.Adjustment({
+                lower: 1.1,
+                upper: 2,
+                step_increment: 0.1,
+            }),
+            digits: 2,
+            valign: Gtk.Align.CENTER,
+        });
+        window._preferences.bind_property(
+            `zoomFactor`,
+            zoomFactorSpinBox,
+            `value`,
+            GObject.BindingFlags.BIDIRECTIONAL | GObject.BindingFlags.SYNC_CREATE
+        );
 
-    const zoomFactorSpinBox = new Gtk.SpinButton({
-        adjustment: new Gtk.Adjustment({
-            lower: 1.1,
-            upper: 2,
-            step_increment: 0.1,
-        }),
-        digits: 2,
-        valign: Gtk.Align.CENTER,
-    });
-    window._preferences.bind_property(
-        `zoomFactor`,
-        zoomFactorSpinBox,
-        `value`,
-        GObject.BindingFlags.BIDIRECTIONAL | GObject.BindingFlags.SYNC_CREATE
-    );
+        const zoomFactorRow = new Adw.ActionRow({
+            activatable_widget: zoomFactorSpinBox,
+            title: _(`Zoom factor`),
+        });
+        zoomFactorRow.add_suffix(zoomFactorSpinBox);
 
-    const zoomFactorRow = new Adw.ActionRow({
-        activatable_widget: zoomFactorSpinBox,
-        title: _(`Zoom factor`),
-    });
-    zoomFactorRow.add_suffix(zoomFactorSpinBox);
+        const generalGroup = new Adw.PreferencesGroup({
+            title: _(`General`, `General options`),
+        });
+        generalGroup.add(zoomFactorRow);
 
-    const generalGroup = new Adw.PreferencesGroup({
-        title: _(`General`, `General options`),
-    });
-    generalGroup.add(zoomFactorRow);
+        const keybindingGroup = new Adw.PreferencesGroup({
+            title: _(`Keyboard Shortcuts`),
+        });
+        keybindingGroup.add(new ShortcutRow(
+            _(`Zoom in`),
+            window._preferences,
+            `zoomInShortcut`
+        ));
+        keybindingGroup.add(new ShortcutRow(
+            _(`Zoom out`),
+            window._preferences,
+            `zoomOutShortcut`
+        ));
 
-    const keybindingGroup = new Adw.PreferencesGroup({
-        title: _(`Keyboard Shortcuts`),
-    });
-    keybindingGroup.add(new ShortcutRow(
-        _(`Zoom in`),
-        window._preferences,
-        `zoomInShortcut`
-    ));
-    keybindingGroup.add(new ShortcutRow(
-        _(`Zoom out`),
-        window._preferences,
-        `zoomOutShortcut`
-    ));
+        const page = new Adw.PreferencesPage();
+        page.add(generalGroup);
+        page.add(keybindingGroup);
 
-    const page = new Adw.PreferencesPage();
-    page.add(generalGroup);
-    page.add(keybindingGroup);
-
-    window.add(page);
-};
+        window.add(page);
+    }
+}

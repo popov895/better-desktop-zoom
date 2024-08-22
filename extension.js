@@ -1,19 +1,20 @@
 'use strict';
 
-const { Gio, Meta, Shell } = imports.gi;
+import Gio from 'gi://Gio';
+import Meta from 'gi://Meta';
+import Shell from 'gi://Shell';
 
-const Main = imports.ui.main;
+import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 
-const ExtensionUtils = imports.misc.extensionUtils;
-const Extension = ExtensionUtils.getCurrentExtension();
-const { Preferences } = Extension.imports.lib.preferences;
+import { Extension } from 'resource:///org/gnome/shell/extensions/extension.js';
+import { Preferences } from './lib/preferences.js';
 
-class ExtensionImpl {
+export default class extends Extension {
     enable() {
         this._keyMagnifierEnabled = `screen-magnifier-enabled`;
         this._keyZoomFactor = `mag-factor`;
 
-        this._preferences = new Preferences();
+        this._preferences = new Preferences(this);
 
         this._a11ySettings = new Gio.Settings({
             schema_id: `org.gnome.desktop.a11y.applications`,
@@ -86,7 +87,3 @@ class ExtensionImpl {
         }
     }
 }
-
-var init = () => {
-    return new ExtensionImpl();
-};
