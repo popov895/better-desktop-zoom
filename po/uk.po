@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-22 14:08+0000\n"
+"POT-Creation-Date: 2024-08-22 14:21+0000\n"
 "PO-Revision-Date: 2024-08-22 14:18+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -18,36 +18,36 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.4.2\n"
 
-#: prefs.js:24
+#: prefs.js:26
 msgid "Press Backspace to clear shortcut or Esc to cancel"
 msgstr "Натисніть Backspace, щоб очистити поєднання клавіш, або Esc, щоб скасувати"
 
-#: prefs.js:25
+#: prefs.js:27
 msgid "Enter a new shortcut"
 msgstr "Введіть нове поєднання клавіш"
 
-#: prefs.js:73
+#: prefs.js:75
 msgctxt "Keyboard shortcut is disabled"
 msgid "Disabled"
 msgstr "Вимкнено"
 
-#: prefs.js:126
+#: prefs.js:125
 msgid "Zoom factor"
 msgstr "Коефіцієнт масштабування"
 
-#: prefs.js:131
+#: prefs.js:130
 msgctxt "General options"
 msgid "General"
 msgstr "Загальне"
 
-#: prefs.js:136
+#: prefs.js:135
 msgid "Keyboard Shortcuts"
 msgstr "Поєднання клавіш"
 
-#: prefs.js:139
+#: prefs.js:138
 msgid "Zoom in"
 msgstr "Збільшити"
 
-#: prefs.js:144
+#: prefs.js:143
 msgid "Zoom out"
 msgstr "Зменшити"
