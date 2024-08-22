@@ -1,0 +1,12 @@
+{
+    "uuid": "better-desktop-zoom@popov895.ukr.net",
+    "name": "Better Desktop Zoom",
+    "description": "A better experience with the GNOME magnifier",
+    "url": "https://github.com/popov895/better-desktop-zoom",
+    "version": 1,
+    "shell-version": ["42", "43", "44"],
+    "settings-schema": "org.gnome.shell.extensions.better-desktop-zoom",
+    "donations": {
+        "custom": "https://github.com/popov895/popov895"
+    }
+}

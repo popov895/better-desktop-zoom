@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+    <schema id="org.gnome.shell.extensions.better-desktop-zoom" path="/org/gnome/shell/extensions/better-desktop-zoom/">
+        <key name="zoom-factor" type="d">
+            <range min="1.1" max="2"/>
+            <default>1.2</default>
+        </key>
+        <key name="zoom-in-shortcut" type="as">
+            <default><![CDATA[["<Super>equal"]]]></default>
+        </key>
+        <key name="zoom-out-shortcut" type="as">
+            <default><![CDATA[["<Super>minus"]]]></default>
+        </key>
+    </schema>
+</schemalist>
