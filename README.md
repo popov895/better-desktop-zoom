@@ -4,6 +4,8 @@ A better experience with the GNOME magnifier.
 
 ### Installation
 
+The extension is available for installation on the [GNOME Shell Extensions website](https://extensions.gnome.org/extension/7263/better-desktop-zoom/).
+
 To install manually follow the steps below:
 
 - download the latest version of the extension from the [releases page](https://github.com/popov895/better-desktop-zoom/releases)
