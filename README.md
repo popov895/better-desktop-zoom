@@ -1,6 +1,11 @@
 # Better Desktop Zoom
 
-A better experience with the GNOME magnifier.
+This extension makes the GNOME magnifier behave similarly to the Zoom desktop effect in KDE:
+
+- press `Meta`+`=` to start zooming or increase the zoom level
+- press `Meta`+`-` to decrease the zoom level or stop zooming
+
+These shortcuts, as well as the zoom factor, can be changed in the extension preferences.
 
 ### Installation
 
