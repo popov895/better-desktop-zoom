@@ -4,7 +4,7 @@
     "description": "A better experience with the GNOME magnifier",
     "url": "https://github.com/popov895/better-desktop-zoom",
     "version": 1,
-    "shell-version": ["45", "46"],
+    "shell-version": ["45", "46", "47"],
     "settings-schema": "org.gnome.shell.extensions.better-desktop-zoom",
     "donations": {
         "custom": "https://github.com/popov895/popov895"
