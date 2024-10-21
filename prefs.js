@@ -2,6 +2,7 @@
 
 import Adw from 'gi://Adw';
 import Gdk from 'gi://Gdk';
+import GLib from 'gi://GLib';
 import GObject from 'gi://GObject';
 import Gtk from 'gi://Gtk';
 
@@ -126,10 +127,29 @@ export default class extends ExtensionPreferences {
         });
         zoomFactorRow.add_suffix(zoomFactorSpinBox);
 
+        const scrollToZoomSwitch = new Gtk.Switch({
+            valign: Gtk.Align.CENTER,
+        });
+        window._preferences.bind_property(
+            `scrollToZoom`,
+            scrollToZoomSwitch,
+            `active`,
+            GObject.BindingFlags.BIDIRECTIONAL | GObject.BindingFlags.SYNC_CREATE
+        );
+
+        const scrollToZoomRow = new Adw.ActionRow({
+            activatable_widget: scrollToZoomSwitch,
+            subtitle: _(`Zoom the desktop while scrolling with the Ctrl and Super keys pressed`),
+            title: _(`Scroll to zoom`),
+            visible: GLib.getenv(`XDG_SESSION_TYPE`) === `wayland`,
+        });
+        scrollToZoomRow.add_suffix(scrollToZoomSwitch);
+
         const generalGroup = new Adw.PreferencesGroup({
             title: _(`General`, `General options`),
         });
         generalGroup.add(zoomFactorRow);
+        generalGroup.add(scrollToZoomRow);
 
         const keybindingGroup = new Adw.PreferencesGroup({
             title: _(`Keyboard Shortcuts`),

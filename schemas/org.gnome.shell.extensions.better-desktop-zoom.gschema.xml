@@ -5,6 +5,9 @@
             <range min="1.1" max="2"/>
             <default>1.2</default>
         </key>
+        <key name="scroll-to-zoom" type="b">
+            <default>false</default>
+        </key>
         <key name="zoom-in-shortcut" type="as">
             <default><![CDATA[["<Super>equal"]]]></default>
         </key>
