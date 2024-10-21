@@ -1,6 +1,6 @@
 'use strict';
 
-const { Gio, Meta, Shell } = imports.gi;
+const { Clutter, Gio, Meta, Shell } = imports.gi;
 
 const Main = imports.ui.main;
 
@@ -9,10 +9,12 @@ const Extension = ExtensionUtils.getCurrentExtension();
 const { Preferences } = Extension.imports.lib.preferences;
 
 class ExtensionImpl {
-    enable() {
+    constructor() {
         this._keyMagnifierEnabled = `screen-magnifier-enabled`;
         this._keyZoomFactor = `mag-factor`;
+    }
 
+    enable() {
         this._preferences = new Preferences();
 
         this._a11ySettings = new Gio.Settings({
@@ -23,9 +25,21 @@ class ExtensionImpl {
         });
 
         this._addKeybindings();
+
+        global.stage.connectObject(`scroll-event`, (...[, event]) => {
+            return this._handleGlobalStageScrollEvent(event);
+        }, this);
+
+        Main.wm.handleWorkspaceScroll = (event) => {
+            return this._handleGlobalStageScrollEvent(event) || Object.getPrototypeOf(Main.wm).handleWorkspaceScroll.call(Main.wm, event);
+        };
     }
 
     disable() {
+        Main.wm.handleWorkspaceScroll = Object.getPrototypeOf(Main.wm).handleWorkspaceScroll;
+
+        global.stage.disconnectObject(this);
+
         this._removeKeybindings();
 
         delete this._magnifierSettings;
@@ -59,6 +73,28 @@ class ExtensionImpl {
     _removeKeybindings() {
         Main.wm.removeKeybinding(this._preferences._keyZoomInShortcut);
         Main.wm.removeKeybinding(this._preferences._keyZoomOutShortcut);
+    }
+
+    _handleGlobalStageScrollEvent(event) {
+        if (this._preferences.scrollToZoom) {
+            const modifiers = Clutter.ModifierType.CONTROL_MASK | Clutter.ModifierType.MOD4_MASK;
+            if ((event.get_state() & modifiers) === modifiers) {
+                switch (event.get_scroll_direction()) {
+                    case Clutter.ScrollDirection.UP: {
+                        this._zoomIn();
+                        return Clutter.EVENT_STOP;
+                    }
+                    case Clutter.ScrollDirection.DOWN: {
+                        this._zoomOut();
+                        return Clutter.EVENT_STOP;
+                    }
+                    default:
+                        break;
+                }
+            }
+        }
+
+        return Clutter.EVENT_PROPAGATE;
     }
 
     _zoomIn() {
