@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-22 14:21+0000\n"
+"POT-Creation-Date: 2024-10-23 18:52+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,36 +17,44 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: prefs.js:26
+#: prefs.js:27
 msgid "Press Backspace to clear shortcut or Esc to cancel"
 msgstr ""
 
-#: prefs.js:27
+#: prefs.js:28
 msgid "Enter a new shortcut"
 msgstr ""
 
-#: prefs.js:75
+#: prefs.js:76
 msgctxt "Keyboard shortcut is disabled"
 msgid "Disabled"
 msgstr ""
 
-#: prefs.js:125
+#: prefs.js:126
 msgid "Zoom factor"
 msgstr ""
 
-#: prefs.js:130
+#: prefs.js:142
+msgid "Zoom the desktop while scrolling with the Ctrl and Super keys pressed"
+msgstr ""
+
+#: prefs.js:143
+msgid "Scroll to zoom"
+msgstr ""
+
+#: prefs.js:149
 msgctxt "General options"
 msgid "General"
 msgstr ""
 
-#: prefs.js:135
+#: prefs.js:155
 msgid "Keyboard Shortcuts"
 msgstr ""
 
-#: prefs.js:138
+#: prefs.js:158
 msgid "Zoom in"
 msgstr ""
 
-#: prefs.js:143
+#: prefs.js:163
 msgid "Zoom out"
 msgstr ""
