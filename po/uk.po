@@ -37,11 +37,11 @@ msgstr "Коефіцієнт масштабування"
 
 #: prefs.js:142
 msgid "Zoom the desktop while scrolling with the Ctrl and Super keys pressed"
-msgstr ""
+msgstr "Масштабувати робочий стіл під час прокрутки з натиснутими клавішами Ctrl і Super"
 
 #: prefs.js:143
 msgid "Scroll to zoom"
-msgstr ""
+msgstr "Прокрутити для масштабування"
 
 #: prefs.js:149
 msgctxt "General options"
