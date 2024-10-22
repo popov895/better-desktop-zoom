@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-22 14:08+0000\n"
+"POT-Creation-Date: 2024-10-23 18:45+0300\n"
 "PO-Revision-Date: 2024-09-01 12:16+0100\n"
 "Last-Translator: Albano Battistella <albanobattistella@gmail.com>\n"
 "Language-Team: Italian <LL@li.org>\n"
@@ -18,7 +18,8 @@ msgstr ""
 
 #: prefs.js:24
 msgid "Press Backspace to clear shortcut or Esc to cancel"
-msgstr "Premi il tasto Backspace per cancellare la scorciatoia o Esc per annullare"
+msgstr ""
+"Premi il tasto Backspace per cancellare la scorciatoia o Esc per annullare"
 
 #: prefs.js:25
 msgid "Enter a new shortcut"
@@ -33,19 +34,27 @@ msgstr "Disabilitata"
 msgid "Zoom factor"
 msgstr "Fattore di zoom"
 
-#: prefs.js:131
+#: prefs.js:142
+msgid "Zoom the desktop while scrolling with the Ctrl and Super keys pressed"
+msgstr ""
+
+#: prefs.js:143
+msgid "Scroll to zoom"
+msgstr ""
+
+#: prefs.js:149
 msgctxt "General options"
 msgid "General"
 msgstr "Generale"
 
-#: prefs.js:136
+#: prefs.js:155
 msgid "Keyboard Shortcuts"
 msgstr "Scorciatoie da tastiera"
 
-#: prefs.js:139
+#: prefs.js:158
 msgid "Zoom in"
 msgstr "Zoom avanti"
 
-#: prefs.js:144
+#: prefs.js:163
 msgid "Zoom out"
 msgstr "Zoom indietro"

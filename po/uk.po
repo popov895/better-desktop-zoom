@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-22 14:08+0000\n"
+"POT-Creation-Date: 2024-10-23 18:45+0300\n"
 "PO-Revision-Date: 2024-08-22 14:18+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -35,19 +35,27 @@ msgstr "Вимкнено"
 msgid "Zoom factor"
 msgstr "Коефіцієнт масштабування"
 
-#: prefs.js:131
+#: prefs.js:142
+msgid "Zoom the desktop while scrolling with the Ctrl and Super keys pressed"
+msgstr ""
+
+#: prefs.js:143
+msgid "Scroll to zoom"
+msgstr ""
+
+#: prefs.js:149
 msgctxt "General options"
 msgid "General"
 msgstr "Загальне"
 
-#: prefs.js:136
+#: prefs.js:155
 msgid "Keyboard Shortcuts"
 msgstr "Поєднання клавіш"
 
-#: prefs.js:139
+#: prefs.js:158
 msgid "Zoom in"
 msgstr "Збільшити"
 
-#: prefs.js:144
+#: prefs.js:163
 msgid "Zoom out"
 msgstr "Зменшити"
