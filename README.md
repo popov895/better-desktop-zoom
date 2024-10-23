@@ -4,6 +4,7 @@ This extension makes the GNOME magnifier behave similarly to the Zoom desktop ef
 
 - press `Meta`+`=` to start zooming or increase the zoom level
 - press `Meta`+`-` to decrease the zoom level or stop zooming
+- zoom the desktop while scrolling with the `Ctrl`+`Super` keys pressed (Wayland only)
 
 These shortcuts, as well as the zoom factor, can be changed in the extension preferences.
 
