@@ -81,19 +81,30 @@ export default class extends Extension {
 
     _handleGlobalStageScrollEvent(event) {
         if (this._preferences.scrollToZoom) {
-            const modifiers = Clutter.ModifierType.CONTROL_MASK | Clutter.ModifierType.MOD4_MASK;
-            if ((event.get_state() & modifiers) === modifiers) {
-                switch (event.get_scroll_direction()) {
-                    case Clutter.ScrollDirection.UP: {
-                        this._zoomIn();
-                        return Clutter.EVENT_STOP;
+            const state = event.get_state();
+            if (state & Clutter.ModifierType.SUPER_MASK || state & Clutter.ModifierType.MOD4_MASK) {
+                const modifierKeys = [
+                    Clutter.ModifierType.CONTROL_MASK,
+                    Clutter.ModifierType.MOD1_MASK,
+                    Clutter.ModifierType.SHIFT_MASK,
+                ];
+                if (state & modifierKeys[this._preferences.scrollToZoomModifierKeys]) {
+                    switch (event.get_scroll_direction()) {
+                        case Clutter.ScrollDirection.UP: {
+                            this._zoomIn();
+                            return Clutter.EVENT_STOP;
+                        }
+                        case Clutter.ScrollDirection.DOWN: {
+                            this._zoomOut();
+                            return Clutter.EVENT_STOP;
+                        }
+                        case Clutter.ScrollDirection.SMOOTH: {
+                            // drop this event
+                            return Clutter.EVENT_STOP;
+                        }
+                        default:
+                            break;
                     }
-                    case Clutter.ScrollDirection.DOWN: {
-                        this._zoomOut();
-                        return Clutter.EVENT_STOP;
-                    }
-                    default:
-                        break;
                 }
             }
         }
