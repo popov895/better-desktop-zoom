@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-23 18:52+0300\n"
+"POT-Creation-Date: 2024-10-24 21:14+0300\n"
 "PO-Revision-Date: 2024-08-22 14:18+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -20,7 +20,8 @@ msgstr ""
 
 #: prefs.js:27
 msgid "Press Backspace to clear shortcut or Esc to cancel"
-msgstr "Натисніть Backspace, щоб очистити поєднання клавіш, або Esc, щоб скасувати"
+msgstr ""
+"Натисніть Backspace, щоб очистити поєднання клавіш, або Esc, щоб скасувати"
 
 #: prefs.js:28
 msgid "Enter a new shortcut"
@@ -35,27 +36,32 @@ msgstr "Вимкнено"
 msgid "Zoom factor"
 msgstr "Коефіцієнт масштабування"
 
-#: prefs.js:142
-msgid "Zoom the desktop while scrolling with the Ctrl and Super keys pressed"
-msgstr "Масштабувати робочий стіл під час прокрутки з натиснутими клавішами Ctrl і Super"
-
-#: prefs.js:143
-msgid "Scroll to zoom"
-msgstr "Прокрутити для масштабування"
-
-#: prefs.js:149
+#: prefs.js:131
 msgctxt "General options"
 msgid "General"
 msgstr "Загальне"
 
-#: prefs.js:155
+#: prefs.js:147
+msgid "Use scroll gesture to zoom desktop"
+msgstr ""
+
+#: prefs.js:168
+msgid "Modifier keys for scroll gesture"
+msgstr ""
+
+#: prefs.js:173
+#, fuzzy
+msgid "Scroll To Zoom"
+msgstr "Прокрутити для масштабування"
+
+#: prefs.js:180
 msgid "Keyboard Shortcuts"
 msgstr "Поєднання клавіш"
 
-#: prefs.js:158
+#: prefs.js:183
 msgid "Zoom in"
 msgstr "Збільшити"
 
-#: prefs.js:163
+#: prefs.js:188
 msgid "Zoom out"
 msgstr "Зменшити"
