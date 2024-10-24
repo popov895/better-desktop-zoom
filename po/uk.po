@@ -20,8 +20,7 @@ msgstr ""
 
 #: prefs.js:24
 msgid "Press Backspace to clear shortcut or Esc to cancel"
-msgstr ""
-"Натисніть Backspace, щоб очистити поєднання клавіш, або Esc, щоб скасувати"
+msgstr "Натисніть Backspace, щоб очистити поєднання клавіш, або Esc, щоб скасувати"
 
 #: prefs.js:25
 msgid "Enter a new shortcut"
@@ -43,16 +42,16 @@ msgstr "Загальне"
 
 #: prefs.js:147
 msgid "Use scroll gesture to zoom desktop"
-msgstr ""
+msgstr "Масштабувати робочий стіл прокручуванням"
 
 #: prefs.js:168
 msgid "Modifier keys for scroll gesture"
-msgstr ""
+msgstr "Клавіші-модифікатори для прокручування"
 
 #: prefs.js:173
 #, fuzzy
 msgid "Scroll To Zoom"
-msgstr "Прокрутити для масштабування"
+msgstr "Прокручування для масштабування"
 
 #: prefs.js:180
 msgid "Keyboard Shortcuts"
