@@ -3,7 +3,7 @@
     "name": "Better Desktop Zoom",
     "description": "A better experience with the GNOME magnifier",
     "url": "https://github.com/popov895/better-desktop-zoom",
-    "version": 3,
+    "version": 4,
     "shell-version": ["42", "43", "44"],
     "settings-schema": "org.gnome.shell.extensions.better-desktop-zoom",
     "donations": {
