@@ -127,6 +127,11 @@ var fillPreferencesWindow = (window) => {
     });
     zoomFactorRow.add_suffix(zoomFactorSpinBox);
 
+    const generalGroup = new Adw.PreferencesGroup({
+        title: _(`General`, `General options`),
+    });
+    generalGroup.add(zoomFactorRow);
+
     const scrollToZoomSwitch = new Gtk.Switch({
         valign: Gtk.Align.CENTER,
     });
@@ -139,17 +144,37 @@ var fillPreferencesWindow = (window) => {
 
     const scrollToZoomRow = new Adw.ActionRow({
         activatable_widget: scrollToZoomSwitch,
-        subtitle: _(`Zoom the desktop while scrolling with the Ctrl and Super keys pressed`),
-        title: _(`Scroll to zoom`),
-        visible: GLib.getenv(`XDG_SESSION_TYPE`) === `wayland`,
+        title: _(`Use scroll gesture to zoom desktop`),
     });
     scrollToZoomRow.add_suffix(scrollToZoomSwitch);
 
-    const generalGroup = new Adw.PreferencesGroup({
-        title: _(`General`, `General options`),
+    const scrollToZoomModifierKeysDropDown = new Gtk.DropDown({
+        model: Gtk.StringList.new([
+            `Super + Ctrl`,
+            `Super + Alt`,
+            `Super + Shift`,
+        ]),
+        valign: Gtk.Align.CENTER,
     });
-    generalGroup.add(zoomFactorRow);
-    generalGroup.add(scrollToZoomRow);
+    window._preferences.bind_property(
+        `scrollToZoomModifierKeys`,
+        scrollToZoomModifierKeysDropDown,
+        `selected`,
+        GObject.BindingFlags.BIDIRECTIONAL | GObject.BindingFlags.SYNC_CREATE
+    );
+
+    const scrollToZoomModifierKeysRow = new Adw.ActionRow({
+        activatable_widget: scrollToZoomModifierKeysDropDown,
+        title: _(`Modifier keys for scroll gesture`),
+    });
+    scrollToZoomModifierKeysRow.add_suffix(scrollToZoomModifierKeysDropDown);
+
+    const scrollToZoomGroup = new Adw.PreferencesGroup({
+        title: _(`Scroll To Zoom`),
+        visible: GLib.getenv(`XDG_SESSION_TYPE`) === `wayland`,
+    });
+    scrollToZoomGroup.add(scrollToZoomRow);
+    scrollToZoomGroup.add(scrollToZoomModifierKeysRow);
 
     const keybindingGroup = new Adw.PreferencesGroup({
         title: _(`Keyboard Shortcuts`),
@@ -167,6 +192,7 @@ var fillPreferencesWindow = (window) => {
 
     const page = new Adw.PreferencesPage();
     page.add(generalGroup);
+    page.add(scrollToZoomGroup);
     page.add(keybindingGroup);
 
     window.add(page);
