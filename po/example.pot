@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-23 18:45+0300\n"
+"POT-Creation-Date: 2024-10-24 21:11+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -34,27 +34,31 @@ msgstr ""
 msgid "Zoom factor"
 msgstr ""
 
-#: prefs.js:142
-msgid "Zoom the desktop while scrolling with the Ctrl and Super keys pressed"
-msgstr ""
-
-#: prefs.js:143
-msgid "Scroll to zoom"
-msgstr ""
-
-#: prefs.js:149
+#: prefs.js:131
 msgctxt "General options"
 msgid "General"
 msgstr ""
 
-#: prefs.js:155
+#: prefs.js:147
+msgid "Use scroll gesture to zoom desktop"
+msgstr ""
+
+#: prefs.js:168
+msgid "Modifier keys for scroll gesture"
+msgstr ""
+
+#: prefs.js:173
+msgid "Scroll To Zoom"
+msgstr ""
+
+#: prefs.js:180
 msgid "Keyboard Shortcuts"
 msgstr ""
 
-#: prefs.js:158
+#: prefs.js:183
 msgid "Zoom in"
 msgstr ""
 
-#: prefs.js:163
+#: prefs.js:188
 msgid "Zoom out"
 msgstr ""
