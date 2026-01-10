@@ -1,21 +1,35 @@
 'use strict';
 
-const { Clutter, Gio, Meta, Shell } = imports.gi;
+import Clutter from 'gi://Clutter';
+import Gio from 'gi://Gio';
+import Meta from 'gi://Meta';
+import Shell from 'gi://Shell';
 
-const Main = imports.ui.main;
+import * as Main from 'resource:///org/gnome/shell/ui/main.js';
+import { Extension } from 'resource:///org/gnome/shell/extensions/extension.js';
+import { Preferences } from './lib/preferences.js';
 
-const ExtensionUtils = imports.misc.extensionUtils;
-const Extension = ExtensionUtils.getCurrentExtension();
-const { Preferences } = Extension.imports.lib.preferences;
+export default class BetterDesktopZoomExtension extends Extension {
+    enable() {
+        this._impl = new ExtensionImpl(this);
+        this._impl.enable();
+    }
+
+    disable() {
+        this._impl.disable();
+        this._impl = null;
+    }
+}
 
 class ExtensionImpl {
-    constructor() {
+    constructor(extension) {
+        this._extension = extension;
         this._keyMagnifierEnabled = `screen-magnifier-enabled`;
         this._keyZoomFactor = `mag-factor`;
     }
 
     enable() {
-        this._preferences = new Preferences();
+        this._preferences = new Preferences(this._extension);
 
         this._a11ySettings = new Gio.Settings({
             schema_id: `org.gnome.desktop.a11y.applications`,
@@ -26,12 +40,15 @@ class ExtensionImpl {
 
         this._addKeybindings();
 
-        global.stage.connectObject(`scroll-event`, (...[, event]) => {
+        global.stage.connectObject(`scroll-event`, (actor, event) => {
             return this._handleGlobalStageScrollEvent(event);
         }, this);
 
+        this._originalScroll = Main.wm.handleWorkspaceScroll;
         Main.wm.handleWorkspaceScroll = (event) => {
-            return this._handleGlobalStageScrollEvent(event) || Object.getPrototypeOf(Main.wm).handleWorkspaceScroll.call(Main.wm, event);
+            if (this._handleGlobalStageScrollEvent(event) === Clutter.EVENT_STOP)
+                return true;
+            return this._originalScroll.call(Main.wm, event);
         };
     }
 

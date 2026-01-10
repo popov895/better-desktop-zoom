@@ -1,23 +1,22 @@
 'use strict';
 
-const { Adw, Gdk, GLib, GObject, Gtk } = imports.gi;
+import Adw from 'gi://Adw';
+import Gdk from 'gi://Gdk';
+import GLib from 'gi://GLib';
+import GObject from 'gi://GObject';
+import Gtk from 'gi://Gtk';
 
-const ExtensionUtils = imports.misc.extensionUtils;
-const Extension = ExtensionUtils.getCurrentExtension();
-const { Preferences } = Extension.imports.lib.preferences;
+import { ExtensionPreferences, gettext as _ } from 'resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js';
+import { Preferences } from './lib/preferences.js';
 
-const _ = (text, context) => {
-    return context ? ExtensionUtils.pgettext(context, text) : ExtensionUtils.gettext(text);
-};
-
-const ShortcutWindow = GObject.registerClass(
-class ShortcutWindow extends Adw.Window {
-    static [GObject.signals] = {
+const ShortcutWindow = GObject.registerClass({
+    GTypeName: 'BetterDesktopZoom_ShortcutWindow',
+    Signals: {
         'shortcut': {
             param_types: [GObject.TYPE_STRING],
         },
-    };
-
+    },
+}, class ShortcutWindow extends Adw.Window {
     constructor(parent) {
         super({
             content: new Adw.StatusPage({
@@ -59,8 +58,9 @@ class ShortcutWindow extends Adw.Window {
     }
 });
 
-const ShortcutRow = GObject.registerClass(
-class ShortcutRow extends Adw.ActionRow {
+const ShortcutRow = GObject.registerClass({
+    GTypeName: 'BetterDesktopZoom_ShortcutRow',
+}, class ShortcutRow extends Adw.ActionRow {
     constructor(title, preferences, property) {
         super({
             title: title,
@@ -70,7 +70,7 @@ class ShortcutRow extends Adw.ActionRow {
         this._property = property;
 
         this.activatable_widget = new Gtk.ShortcutLabel({
-            disabled_text: _(`Disabled`, `Keyboard shortcut is disabled`),
+            disabled_text: _(`Disabled`),
             valign: Gtk.Align.CENTER,
         });
         this._preferences.bind_property(
@@ -95,105 +95,104 @@ class ShortcutRow extends Adw.ActionRow {
     }
 });
 
-var init = () => {
-    ExtensionUtils.initTranslations(Extension.uuid);
-};
+export default class BetterDesktopZoomPreferences extends ExtensionPreferences {
+    fillPreferencesWindow(window) {
+        window._preferences = new Preferences(this);
 
-var fillPreferencesWindow = (window) => {
-    window._preferences = new Preferences();
-    window.connect(`close-request`, () => {
-        window._preferences.destroy();
-    });
+        window.connect('close-request', () => {
+            window._preferences.destroy();
+        });
 
-    const zoomFactorSpinBox = new Gtk.SpinButton({
-        adjustment: new Gtk.Adjustment({
-            lower: 1.1,
-            upper: 2,
-            step_increment: 0.1,
-        }),
-        digits: 2,
-        valign: Gtk.Align.CENTER,
-    });
-    window._preferences.bind_property(
-        `zoomFactor`,
-        zoomFactorSpinBox,
-        `value`,
-        GObject.BindingFlags.BIDIRECTIONAL | GObject.BindingFlags.SYNC_CREATE
-    );
+        const zoomFactorSpinBox = new Gtk.SpinButton({
+            adjustment: new Gtk.Adjustment({
+                lower: 1.1,
+                upper: 2,
+                step_increment: 0.1,
+            }),
+            digits: 2,
+            valign: Gtk.Align.CENTER,
+        });
+        window._preferences.bind_property(
+            'zoomFactor',
+            zoomFactorSpinBox,
+            'value',
+            GObject.BindingFlags.BIDIRECTIONAL | GObject.BindingFlags.SYNC_CREATE
+        );
 
-    const zoomFactorRow = new Adw.ActionRow({
-        activatable_widget: zoomFactorSpinBox,
-        title: _(`Zoom factor`),
-    });
-    zoomFactorRow.add_suffix(zoomFactorSpinBox);
+        const zoomFactorRow = new Adw.ActionRow({
+            activatable_widget: zoomFactorSpinBox,
+            title: _('Zoom factor'),
+        });
+        zoomFactorRow.add_suffix(zoomFactorSpinBox);
 
-    const generalGroup = new Adw.PreferencesGroup({
-        title: _(`General`, `General options`),
-    });
-    generalGroup.add(zoomFactorRow);
+        const generalGroup = new Adw.PreferencesGroup({
+            title: _('General'),
+        });
+        generalGroup.add(zoomFactorRow);
 
-    const scrollToZoomSwitch = new Gtk.Switch({
-        valign: Gtk.Align.CENTER,
-    });
-    window._preferences.bind_property(
-        `scrollToZoom`,
-        scrollToZoomSwitch,
-        `active`,
-        GObject.BindingFlags.BIDIRECTIONAL | GObject.BindingFlags.SYNC_CREATE
-    );
+        const scrollToZoomSwitch = new Gtk.Switch({
+            valign: Gtk.Align.CENTER,
+        });
+        window._preferences.bind_property(
+            'scrollToZoom',
+            scrollToZoomSwitch,
+            'active',
+            GObject.BindingFlags.BIDIRECTIONAL | GObject.BindingFlags.SYNC_CREATE
+        );
 
-    const scrollToZoomRow = new Adw.ActionRow({
-        activatable_widget: scrollToZoomSwitch,
-        title: _(`Use scroll gesture to zoom desktop`),
-    });
-    scrollToZoomRow.add_suffix(scrollToZoomSwitch);
+        const scrollToZoomRow = new Adw.ActionRow({
+            activatable_widget: scrollToZoomSwitch,
+            title: _('Use scroll gesture to zoom desktop'),
+        });
+        scrollToZoomRow.add_suffix(scrollToZoomSwitch);
 
-    const scrollToZoomModifierKeysDropDown = new Gtk.DropDown({
-        model: Gtk.StringList.new([
-            `Super + Ctrl`,
-            `Super + Alt`,
-            `Super + Shift`,
-        ]),
-        valign: Gtk.Align.CENTER,
-    });
-    window._preferences.bind_property(
-        `scrollToZoomModifierKeys`,
-        scrollToZoomModifierKeysDropDown,
-        `selected`,
-        GObject.BindingFlags.BIDIRECTIONAL | GObject.BindingFlags.SYNC_CREATE
-    );
+        const scrollToZoomModifierKeysDropDown = new Gtk.DropDown({
+            model: Gtk.StringList.new([
+                'Super + Ctrl',
+                'Super + Alt',
+                'Super + Shift',
+            ]),
+            valign: Gtk.Align.CENTER,
+        });
+        window._preferences.bind_property(
+            'scrollToZoomModifierKeys',
+            scrollToZoomModifierKeysDropDown,
+            'selected',
+            GObject.BindingFlags.BIDIRECTIONAL | GObject.BindingFlags.SYNC_CREATE
+        );
 
-    const scrollToZoomModifierKeysRow = new Adw.ActionRow({
-        activatable_widget: scrollToZoomModifierKeysDropDown,
-        title: _(`Modifier keys for scroll gesture`),
-    });
-    scrollToZoomModifierKeysRow.add_suffix(scrollToZoomModifierKeysDropDown);
+        const scrollToZoomModifierKeysRow = new Adw.ActionRow({
+            activatable_widget: scrollToZoomModifierKeysDropDown,
+            title: _('Modifier keys for scroll gesture'),
+        });
+        scrollToZoomModifierKeysRow.add_suffix(scrollToZoomModifierKeysDropDown);
 
-    const scrollToZoomGroup = new Adw.PreferencesGroup({
-        title: _(`Scroll To Zoom`),
-        visible: GLib.getenv(`XDG_SESSION_TYPE`) === `wayland`,
-    });
-    scrollToZoomGroup.add(scrollToZoomRow);
-    scrollToZoomGroup.add(scrollToZoomModifierKeysRow);
+        const scrollToZoomGroup = new Adw.PreferencesGroup({
+            title: _('Scroll To Zoom'),
+            visible: GLib.getenv('XDG_SESSION_TYPE') === 'wayland',
+        });
+        scrollToZoomGroup.add(scrollToZoomRow);
+        scrollToZoomGroup.add(scrollToZoomModifierKeysRow);
 
-    const keybindingGroup = new Adw.PreferencesGroup({
-        title: _(`Keyboard Shortcuts`),
-    });
-    keybindingGroup.add(new ShortcutRow(
-        _(`Zoom in`),
-        window._preferences,
-        `zoomInShortcut`
-    ));
-    keybindingGroup.add(new ShortcutRow(
-        _(`Zoom out`),
-        window._preferences,
-        `zoomOutShortcut`
-    ));
+        const keybindingGroup = new Adw.PreferencesGroup({
+            title: _('Keyboard Shortcuts'),
+        });
+        keybindingGroup.add(new ShortcutRow(
+            _('Zoom in'),
+            window._preferences,
+            'zoomInShortcut'
+        ));
+        keybindingGroup.add(new ShortcutRow(
+            _('Zoom out'),
+            window._preferences,
+            'zoomOutShortcut'
+        ));
 
-    const page = new Adw.PreferencesPage();
-    page.add(generalGroup);
-    page.add(scrollToZoomGroup);
-    page.add(keybindingGroup);
+        const page = new Adw.PreferencesPage();
+        page.add(generalGroup);
+        page.add(scrollToZoomGroup);
+        page.add(keybindingGroup);
 
-    window.add(page);
-};
+        window.add(page);
+    }
+}
